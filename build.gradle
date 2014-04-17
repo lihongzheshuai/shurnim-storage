@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.6
+version = '1.0'
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+	maven { url "http://maven.restlet.org" }
+}
+
+dependencies {
+	compile('log4j:log4j:1.2.17',
+			'org.slf4j:slf4j-api:1.7.5',
+			'org.slf4j:slf4j-log4j12:1.7.5',
+			"org.restlet.jse:org.restlet:2.1.2",
+			"org.restlet.jse:org.restlet.ext.fileupload:2.1.2",
+			"org.restlet.jse:org.restlet.ext.jetty:2.1.2",
+			"org.restlet.jse:org.restlet.ext.httpclient:2.1.2",
+			"org.springframework:spring-beans:3.1.2.RELEASE",
+			"org.springframework:spring-core:3.1.2.RELEASE",
+			"org.springframework:spring-context:3.1.2.RELEASE",
+			"org.jppf:jppf-common-node:3.3.7",
+			'org.jppf:jppf-common:3.3.7',
+			'io.netty:netty-all:4.0.12.Final',
+			'org.zeromq:jzmq:2.2.2',
+			'dom4j:dom4j:1.6.1'
+			)
+}
+
