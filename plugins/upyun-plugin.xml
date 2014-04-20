@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<name>又拍云</name>
+	<api>
+		<className></className>
+		<params>
+			<param name="username">
+			</param>
+			<param name="password">
+			</param>
+		</params>
+	</api>
+</plugin>
