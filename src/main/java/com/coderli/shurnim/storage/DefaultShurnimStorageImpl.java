@@ -1,6 +1,7 @@
 package com.coderli.shurnim.storage;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import com.coderli.shurnim.storage.plugin.PluginResource;
 import com.coderli.shurnim.storage.plugin.PluginScanner;
 import com.coderli.shurnim.storage.plugin.impl.DefaultPluginParser;
 import com.coderli.shurnim.storage.plugin.impl.DefaultPluginScanner;
+import com.coderli.shurnim.storage.plugin.model.Plugin;
 
 /**
  * 默认的后台接口实现类
@@ -23,6 +25,7 @@ public class DefaultShurnimStorageImpl implements ShurnimStorage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultShurnimStorageImpl.class);
+	private List<Plugin> plugins;
 	private PluginScanner pluginScanner = new DefaultPluginScanner();
 	private PluginParser pluginParser = new DefaultPluginParser();
 
@@ -43,7 +46,7 @@ public class DefaultShurnimStorageImpl implements ShurnimStorage {
 			throw new RuntimeException("没有找到插件配置文件。后端接口无法使用。");
 		}
 		logger.debug("开始解析插件配置文件。");
-		pluginParser.parse(pluginResourceList);
+		plugins = pluginParser.parse(pluginResourceList);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
+	<id>upyun</id>
 	<name>又拍云</name>
 	<api>
 		<className></className>
