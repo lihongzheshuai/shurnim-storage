@@ -60,4 +60,14 @@ public class DefaultShurnimStorageImpl implements ShurnimStorage {
 		String projectHome = System.getProperty("user.dir");
 		return projectHome + File.separator + "plugins";
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.coderli.shurnim.storage.ShurnimStorage#getSupportedPlugins()
+	 */
+	@Override
+	public List<Plugin> getSupportedPlugins() {
+		return this.plugins;
+	}
 }

@@ -1,79 +1,121 @@
-/*
- * Created by JFormDesigner on Tue May 06 23:12:10 CST 2014
+/**
+ * 
  */
-
 package com.coderli.shurnim.storage.ui;
 
-import java.awt.*;
-import javax.swing.*;
-import com.jgoodies.forms.factories.*;
-import com.jgoodies.forms.layout.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JTree;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.border.LineBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import com.coderli.shurnim.storage.DefaultShurnimStorageImpl;
+import com.coderli.shurnim.storage.ShurnimStorage;
+import com.coderli.shurnim.storage.plugin.model.Plugin;
+
+import javax.swing.JScrollPane;
+import javax.swing.tree.TreeNode;
+
+import java.awt.SystemColor;
 
 /**
- * @author hz l
+ * @author OneCoder
+ * @date 2014年5月7日 下午8:26:11
+ * @website http://www.coderli.com
  */
-public class ShurnimUI extends JFrame {
+public class ShurnimUI {
+
+	private JFrame frmShurnim;
+	private ShurnimStorage shurnim = new DefaultShurnimStorageImpl();
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ShurnimUI window = new ShurnimUI();
+					window.frmShurnim.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
 	public ShurnimUI() {
-		initComponents();
+		initialize();
 	}
 
-	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-		// Generated using JFormDesigner Evaluation license - hz l
-		dialogPane = new JPanel();
-		contentPanel = new JPanel();
-		buttonBar = new JPanel();
-		okButton = new JButton();
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmShurnim = new JFrame();
+		frmShurnim.setTitle("Shurnim云存储工具");
+		frmShurnim.setBounds(100, 100, 450, 300);
+		frmShurnim.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//======== this ========
-		Container contentPane = getContentPane();
-		contentPane.setLayout(new BorderLayout());
+		JScrollPane pluginListPanel = new JScrollPane();
+		pluginListPanel.setBackground(new Color(238, 238, 238));
+		pluginListPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
+		frmShurnim.getContentPane().add(pluginListPanel, BorderLayout.WEST);
 
-		//======== dialogPane ========
-		{
-			dialogPane.setBorder(Borders.createEmptyBorder("9dlu, 9dlu, 9dlu, 9dlu"));
-
-			// JFormDesigner evaluation mark
-			dialogPane.setBorder(new javax.swing.border.CompoundBorder(
-				new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
-					"JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
-					javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-					java.awt.Color.red), dialogPane.getBorder())); dialogPane.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
-
-			dialogPane.setLayout(new BorderLayout());
-
-			//======== contentPanel ========
-			{
-				contentPanel.setLayout(new FormLayout(
-					"default, $lcgap, default",
-					"2*(default, $lgap), default"));
+		// 动态获取树节点
+		DefaultMutableTreeNode topNode = new DefaultMutableTreeNode("平台列表");
+		createTreeNode(topNode);
+		JTree pluginTree = new JTree(topNode);
+		pluginTree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Component node = e.getComponent();
 			}
-			dialogPane.add(contentPanel, BorderLayout.CENTER);
+		});
+		pluginTree.setBackground(new Color(238, 238, 238));
+		pluginListPanel.setViewportView(pluginTree);
 
-			//======== buttonBar ========
-			{
-				buttonBar.setBorder(Borders.createEmptyBorder("4dlu, 0dlu, 0dlu, 0dlu"));
-				buttonBar.setLayout(new FormLayout(
-					"$glue, $button",
-					"pref"));
+		JPanel menuPanel = new JPanel();
+		frmShurnim.getContentPane().add(menuPanel, BorderLayout.NORTH);
 
-				//---- okButton ----
-				okButton.setText("OK");
-				buttonBar.add(okButton, CC.xy(2, 1));
+		JMenuBar menuBar = new JMenuBar();
+		menuPanel.add(menuBar);
+
+	}
+
+	/**
+	 * 根据支持的插件列表构造树节点
+	 * 
+	 * @param topNode
+	 * @author OneCoder
+	 * @date 2014年5月7日 下午10:16:08
+	 */
+	private void createTreeNode(DefaultMutableTreeNode topNode) {
+		topNode.setAllowsChildren(true);
+		List<Plugin> plugins = shurnim.getSupportedPlugins();
+		if (plugins != null) {
+			for (Plugin plugin : plugins) {
+				String pluginName = plugin.getName();
+				DefaultMutableTreeNode pluginNode = new DefaultMutableTreeNode(
+						pluginName);
+				topNode.add(pluginNode);
 			}
-			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
-		contentPane.add(dialogPane, BorderLayout.CENTER);
-		pack();
-		setLocationRelativeTo(getOwner());
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
+
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-	// Generated using JFormDesigner Evaluation license - hz l
-	private JPanel dialogPane;
-	private JPanel contentPanel;
-	private JPanel buttonBar;
-	private JButton okButton;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

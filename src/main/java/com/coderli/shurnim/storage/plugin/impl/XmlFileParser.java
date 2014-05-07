@@ -31,6 +31,7 @@ public class XmlFileParser implements FileParser {
 	private static final String ELE_PARAMS = "params";
 	private static final String ELE_PARAM = "param";
 	private static final String ATTR_NAME = "name";
+	private static final String ATTR_DISPLAY_NAME = "displayName";
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -61,10 +62,13 @@ public class XmlFileParser implements FileParser {
 			}
 			for (Element paramEle : paramEles) {
 				String paramName = paramEle.attributeValue(ATTR_NAME);
+				String paramDisplayName = paramEle
+						.attributeValue(ATTR_DISPLAY_NAME);
 				ApiParam param = plugin.new ApiParam();
 				param.setParamName(paramName);
+				param.setDisplayName(paramDisplayName);
 				plugin.addParam(param);
-				logger.debug("解析到参数: {}。", paramName);
+				logger.debug("解析到参数: {}。 显示名: {}", paramName, paramDisplayName);
 			}
 			return plugin;
 		} catch (DocumentException e) {

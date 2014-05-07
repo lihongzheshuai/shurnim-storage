@@ -1,7 +1,5 @@
 package com.coderli.shurnim.storage;
 
-import com.coderli.shurnim.storage.ui.ShurnimUI;
-
 /**
  * UI界面全局入口
  * 
@@ -12,7 +10,6 @@ import com.coderli.shurnim.storage.ui.ShurnimUI;
 public class Main {
 
 	public static void main(String[] args) {
-		new ShurnimUI().setVisible(true);
 	}
 
 }
