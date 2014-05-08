@@ -83,7 +83,7 @@ public class ShurnimUI {
 		pluginTree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Component node = e.getComponent();
+				JTree node = (JTree) e.getComponent();
 			}
 		});
 		pluginTree.setBackground(new Color(238, 238, 238));
@@ -112,6 +112,7 @@ public class ShurnimUI {
 				String pluginName = plugin.getName();
 				DefaultMutableTreeNode pluginNode = new DefaultMutableTreeNode(
 						pluginName);
+				pluginNode.setUserObject(plugin);
 				topNode.add(pluginNode);
 			}
 		}

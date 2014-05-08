@@ -3,6 +3,7 @@ package com.coderli.shurnim.storage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,5 +70,18 @@ public class DefaultShurnimStorageImpl implements ShurnimStorage {
 	@Override
 	public List<Plugin> getSupportedPlugins() {
 		return this.plugins;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.coderli.shurnim.storage.ShurnimStorage#setParamValues(java.lang.String
+	 * , java.util.Map)
+	 */
+	@Override
+	public void setParamValues(String pluginId, Map<String, String> paramsKV) {
+		// TODO Auto-generated method stub
+
 	}
 }

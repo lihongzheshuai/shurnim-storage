@@ -5,9 +5,9 @@
 	<api>
 		<className></className>
 		<params>
-			<param name="username" displayName="">
+			<param name="username" displayName="用户名">
 			</param>
-			<param name="password" displayName="">
+			<param name="password" displayName="密码">
 			</param>
 		</params>
 	</api>
