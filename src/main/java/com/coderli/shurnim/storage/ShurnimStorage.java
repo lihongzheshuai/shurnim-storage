@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.coderli.shurnim.storage.plugin.model.Plugin;
+import com.coderli.shurnim.storage.plugin.model.Resource;
 
 /**
  * 后台模块的全局接口<br>
@@ -34,14 +35,45 @@ public interface ShurnimStorage {
 	List<Plugin> getSupportedPlugins();
 
 	/**
-	 * 给指定的插件的对应参数赋值
+	 * 给指定的插件的对应参数赋值<br>
+	 * 此处赋值会覆盖配置文件中的默认值
 	 * 
 	 * @param pluginId
-	 * @param paramName
-	 * @param paramValue
+	 *            插件ID
+	 * @param paramsKV
+	 *            参数键值对
 	 * @author OneCoder
 	 * @date 2014年5月9日 上午12:41:53
 	 */
 	void setParamValues(String pluginId, Map<String, String> paramsKV);
 
+	/**
+	 * 获取插件对应目录下的资源列表
+	 * 
+	 * @param pluginId
+	 *            插件ID
+	 * @param path
+	 *            指定路径
+	 * @return
+	 * @author OneCoder
+	 * @date 2014年5月11日 上午8:52:00
+	 */
+	List<Resource> getResources(String pluginId, String path);
+
+	/**
+	 * 同步资源
+	 * 
+	 * @param fromPluginId
+	 *            待同步的插件Id
+	 * @param toPluginIds
+	 *            目标插件Id列表
+	 * @param resource
+	 *            待同步的资源
+	 * @return 同步结果
+	 * @author OneCoder
+	 * @date 2014年5月11日 上午11:41:24
+	 */
+	boolean sycnResource(String fromPluginId, List<String> toPluginIds,
+			Resource resource) throws Exception;
+	
 }

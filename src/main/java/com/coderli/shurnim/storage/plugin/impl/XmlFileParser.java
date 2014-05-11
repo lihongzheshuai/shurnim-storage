@@ -52,6 +52,10 @@ public class XmlFileParser implements FileParser {
 			Element apiEle = pluginEle.element(ELE_API);
 			Element classEle = apiEle.element(ELE_CLASSNAME);
 			String className = classEle.getTextTrim();
+			if (className == null) {
+				logger.warn("插件: {} 没有配置接口实现类。略过。", pluginName);
+				return null;
+			}
 			plugin.setApiClass(className);
 			logger.debug("插件的接口实现类为: {}。", className);
 			Element paramsEle = apiEle.element(ELE_PARAMS);

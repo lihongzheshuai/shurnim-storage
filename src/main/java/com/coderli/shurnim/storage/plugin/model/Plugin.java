@@ -11,7 +11,9 @@ import java.util.List;
  * @website http://www.coderli.com
  */
 public class Plugin {
-
+	
+	// 插件Id
+	private String id;
 	// 插件名称，用于界面显示
 	private String name;
 	// 云存储接口实现类
@@ -47,12 +49,20 @@ public class Plugin {
 		this.params = params;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public class ApiParam {
 
 		private String paramName;
 		private String displayName;
 		private String paramValue;
-		
+
 		public String getDisplayName() {
 			return displayName;
 		}
@@ -60,7 +70,6 @@ public class Plugin {
 		public void setDisplayName(String displayName) {
 			this.displayName = displayName;
 		}
-
 
 		public String getParamName() {
 			return paramName;

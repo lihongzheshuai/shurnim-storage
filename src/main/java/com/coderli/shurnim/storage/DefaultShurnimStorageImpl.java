@@ -14,6 +14,7 @@ import com.coderli.shurnim.storage.plugin.PluginScanner;
 import com.coderli.shurnim.storage.plugin.impl.DefaultPluginParser;
 import com.coderli.shurnim.storage.plugin.impl.DefaultPluginScanner;
 import com.coderli.shurnim.storage.plugin.model.Plugin;
+import com.coderli.shurnim.storage.plugin.model.Resource;
 
 /**
  * 默认的后台接口实现类
@@ -22,11 +23,11 @@ import com.coderli.shurnim.storage.plugin.model.Plugin;
  * @date 2014年4月22日 下午9:25:27
  * @website http://www.coderli.com
  */
-public class DefaultShurnimStorageImpl implements ShurnimStorage {
+public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
+		implements ShurnimStorage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultShurnimStorageImpl.class);
-	private List<Plugin> plugins;
 	private PluginScanner pluginScanner = new DefaultPluginScanner();
 	private PluginParser pluginParser = new DefaultPluginParser();
 
@@ -48,6 +49,9 @@ public class DefaultShurnimStorageImpl implements ShurnimStorage {
 		}
 		logger.debug("开始解析插件配置文件。");
 		plugins = pluginParser.parse(pluginResourceList);
+		logger.debug("构造插件接口实例。");
+		createInstance();
+		logger.info("后端接口初始化完成。");
 	}
 
 	/**
@@ -69,7 +73,9 @@ public class DefaultShurnimStorageImpl implements ShurnimStorage {
 	 */
 	@Override
 	public List<Plugin> getSupportedPlugins() {
-		return this.plugins;
+		logger.debug("获取支持的插件列表。");
+		List<Plugin> clonePlugins = new ArrayList<Plugin>(plugins);
+		return clonePlugins;
 	}
 
 	/*
@@ -81,7 +87,37 @@ public class DefaultShurnimStorageImpl implements ShurnimStorage {
 	 */
 	@Override
 	public void setParamValues(String pluginId, Map<String, String> paramsKV) {
-		// TODO Auto-generated method stub
+		if (pluginId == null || paramsKV == null) {
+			logger.error("输入参数为空，不合法。");
+			throw new IllegalArgumentException("输入参数为空。不合法。");
+		}
+		Plugin plugin = searchPlugin(pluginId);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.coderli.shurnim.storage.ShurnimStorage#getResources(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public List<Resource> getResources(String pluginId, String path) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.coderli.shurnim.storage.ShurnimStorage#sycnResource(java.lang.String,
+	 * java.util.List, com.coderli.shurnim.storage.plugin.model.Resource)
+	 */
+	@Override
+	public boolean sycnResource(String fromPluginId, List<String> toPluginIds,
+			Resource resource) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
