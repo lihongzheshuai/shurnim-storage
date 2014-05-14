@@ -21,6 +21,8 @@ public class Resource implements Serializable {
 
 	// 文件夹名
 	private String name;
+	// 资源路径
+	private String path;
 	// 资源类型
 	private Type type;
 	// 创建时间
@@ -69,6 +71,14 @@ public class Resource implements Serializable {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }

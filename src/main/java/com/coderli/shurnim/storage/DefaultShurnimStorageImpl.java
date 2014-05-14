@@ -2,18 +2,23 @@ package com.coderli.shurnim.storage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.coderli.shurnim.storage.exception.ShurnimException;
+import com.coderli.shurnim.storage.plugin.PluginAPI;
 import com.coderli.shurnim.storage.plugin.PluginParser;
 import com.coderli.shurnim.storage.plugin.PluginResource;
 import com.coderli.shurnim.storage.plugin.PluginScanner;
 import com.coderli.shurnim.storage.plugin.impl.DefaultPluginParser;
 import com.coderli.shurnim.storage.plugin.impl.DefaultPluginScanner;
 import com.coderli.shurnim.storage.plugin.model.Plugin;
+import com.coderli.shurnim.storage.plugin.model.Plugin.ApiParam;
 import com.coderli.shurnim.storage.plugin.model.Resource;
 
 /**
@@ -92,6 +97,25 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 			throw new IllegalArgumentException("输入参数为空。不合法。");
 		}
 		Plugin plugin = searchPlugin(pluginId);
+		if (plugin == null) {
+			logger.error("没有对应找到指定的插件信息。{}", pluginId);
+			throw new ShurnimException("没有找到插件: " + pluginId + " 相关信息。");
+		}
+		List<ApiParam> params = plugin.getParams();
+		Iterator<Entry<String, String>> entryItor = paramsKV.entrySet()
+				.iterator();
+		while (entryItor.hasNext()) {
+			Entry<String, String> entry = entryItor.next();
+			String paramKey = entry.getKey();
+			for (ApiParam param : params) {
+				String pName = param.getParamName();
+				if (pName != null && pName.equals(paramKey)) {
+					String value = entry.getValue();
+					logger.debug("设置参数: {} 的值: {} 。", paramKey, value);
+					param.setParamValue(value);
+				}
+			}
+		}
 	}
 
 	/*
@@ -103,8 +127,17 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 	 */
 	@Override
 	public List<Resource> getResources(String pluginId, String path) {
-		// TODO Auto-generated method stub
-		return null;
+		if (pluginId == null) {
+			logger.error("输入的插件Id为null，不合法。");
+			throw new IllegalArgumentException("输入的插件Id为null，不合法。");
+		}
+		logger.info("准备获取插件: {}, 路径: {} 下的资源列表。", pluginId, path);
+		PluginAPI pluginApi = apiMap.get(pluginId);
+		if (pluginApi == null) {
+			logger.warn("没有找到插件: {} 的接口实例。", pluginId);
+			throw new ShurnimException("没有找到插件: " + pluginId + " 的接口实例。");
+		}
+		return pluginApi.getChildResources(path);
 	}
 
 	/*
@@ -117,7 +150,15 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 	@Override
 	public boolean sycnResource(String fromPluginId, List<String> toPluginIds,
 			Resource resource) throws Exception {
-		// TODO Auto-generated method stub
+		if (fromPluginId == null) {
+			logger.error("输入的插件Id为null，不合法。");
+			throw new IllegalArgumentException("输入的插件Id为null，不合法。");
+		}
+		PluginAPI pluginApi = apiMap.get(fromPluginId);
+		if (pluginApi == null) {
+			logger.warn("没有找到插件: {} 的接口实例。", fromPluginId);
+			throw new ShurnimException("没有找到插件: " + fromPluginId + " 的接口实例。");
+		}
 		return false;
 	}
 }
