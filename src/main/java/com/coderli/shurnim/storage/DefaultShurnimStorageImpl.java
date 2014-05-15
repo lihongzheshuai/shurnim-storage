@@ -194,6 +194,8 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 					fromPluginId, toPluginId);
 
 		}
+		logger.debug("删除临时文件: {}。", tempPath);
+		file.delete();
 		return result;
 	}
 }
