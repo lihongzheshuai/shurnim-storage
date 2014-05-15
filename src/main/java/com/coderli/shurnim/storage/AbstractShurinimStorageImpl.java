@@ -1,5 +1,6 @@
 package com.coderli.shurnim.storage;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +84,22 @@ public class AbstractShurinimStorageImpl {
 				logger.error("异常信息。", e);
 			}
 		}
+	}
+
+	/**
+	 * 构造资源完整路径
+	 * 
+	 * @param parentPath
+	 * @param name
+	 * @return
+	 * @author OneCoder
+	 * @date 2014年5月15日 下午10:27:40
+	 */
+	protected String getFullPath(String parentPath, String name) {
+		if (!parentPath.endsWith(File.separator)) {
+			parentPath = parentPath + File.separator;
+		}
+		return parentPath + name;
 	}
 
 	/**

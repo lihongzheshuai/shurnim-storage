@@ -20,6 +20,7 @@ import com.coderli.shurnim.storage.plugin.impl.DefaultPluginScanner;
 import com.coderli.shurnim.storage.plugin.model.Plugin;
 import com.coderli.shurnim.storage.plugin.model.Plugin.ApiParam;
 import com.coderli.shurnim.storage.plugin.model.Resource;
+import com.coderli.shurnim.storage.plugin.model.Resource.Type;
 
 /**
  * 默认的后台接口实现类
@@ -148,17 +149,51 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 	 * java.util.List, com.coderli.shurnim.storage.plugin.model.Resource)
 	 */
 	@Override
-	public boolean sycnResource(String fromPluginId, List<String> toPluginIds,
+	public boolean sycnResource(String fromPluginId, String toPluginId,
 			Resource resource) throws Exception {
 		if (fromPluginId == null) {
 			logger.error("输入的插件Id为null，不合法。");
 			throw new IllegalArgumentException("输入的插件Id为null，不合法。");
 		}
-		PluginAPI pluginApi = apiMap.get(fromPluginId);
-		if (pluginApi == null) {
+		PluginAPI fromPluginApi = apiMap.get(fromPluginId);
+		if (fromPluginApi == null) {
 			logger.warn("没有找到插件: {} 的接口实例。", fromPluginId);
 			throw new ShurnimException("没有找到插件: " + fromPluginId + " 的接口实例。");
 		}
-		return false;
+		if (toPluginId == null) {
+			logger.warn("待同步到的插件Id为空。无需同步。");
+			return false;
+		}
+		PluginAPI toPluginApi = apiMap.get(toPluginId);
+		if (toPluginApi == null) {
+			logger.warn("没有找到插件: {} 的接口实例。略过同步。", toPluginApi);
+			return false;
+		}
+		Type resourceType = resource.getType();
+		String resourceName = resource.getName();
+		String path = resource.getPath();
+		String fullPath = getFullPath(path, resourceName);
+		if (resourceType.equals(Type.DIRECTORY)) {
+			toPluginApi.mkdir(fullPath, true);
+			logger.debug("给插件:{} 创建文件夹: {}", toPluginId, fullPath);
+			return true;
+		}
+		String tempPath = System.getProperty("java.io.tmpdir") + File.separator
+				+ resourceName;
+		logger.debug("开始将文件: {} 下载到临时文件夹。", resourceName);
+		Resource tempResource = fromPluginApi.downloadResource(
+				resource.getPath(), resourceName, tempPath);
+		logger.debug("文件: {} 下载完成。准备上传。");
+		File file = new File(tempPath);
+		boolean result = toPluginApi.uploadResource(path, resourceName, file);
+		if (result) {
+			logger.info("文件: {} 从插件: {} 同步到: {} 完成。", resourceName,
+					fromPluginId, toPluginId);
+		} else {
+			logger.warn("文件: {} 从插件: {} 同步到: {} 失败。", resourceName,
+					fromPluginId, toPluginId);
+
+		}
+		return result;
 	}
 }

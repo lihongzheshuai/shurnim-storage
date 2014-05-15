@@ -66,14 +66,14 @@ public interface ShurnimStorage {
 	 * @param fromPluginId
 	 *            待同步的插件Id
 	 * @param toPluginIds
-	 *            目标插件Id列表
+	 *            目标插件Id
 	 * @param resource
 	 *            待同步的资源
 	 * @return 同步结果
 	 * @author OneCoder
 	 * @date 2014年5月11日 上午11:41:24
 	 */
-	boolean sycnResource(String fromPluginId, List<String> toPluginIds,
+	boolean sycnResource(String fromPluginId, String toPluginId,
 			Resource resource) throws Exception;
 	
 }
