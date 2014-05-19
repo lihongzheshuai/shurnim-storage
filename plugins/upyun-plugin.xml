@@ -3,11 +3,14 @@
 	<id>upyun</id>
 	<name>又拍云</name>
 	<api>
-		<className></className>
+		<className>com.coderli.shurnim.storage.upyun.plugin.UpYunPlugin
+		</className>
 		<params>
-			<param name="username" displayName="用户名">
+			<param name="username" displayName="用户名">onecoder
 			</param>
-			<param name="password" displayName="密码">
+			<param name="password" displayName="密码">840214lhz
+			</param>
+			<param name="bucketName" displayName="空间名">coderli
 			</param>
 		</params>
 	</api>

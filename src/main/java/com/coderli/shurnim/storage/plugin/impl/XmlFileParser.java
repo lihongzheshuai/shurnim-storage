@@ -26,6 +26,7 @@ public class XmlFileParser implements FileParser {
 	private static final Logger logger = LoggerFactory
 			.getLogger(XmlFileParser.class);
 	private static final String ELE_NAME = "name";
+	private static final String ELE_ID = "id";
 	private static final String ELE_API = "api";
 	private static final String ELE_CLASSNAME = "className";
 	private static final String ELE_PARAMS = "params";
@@ -43,6 +44,9 @@ public class XmlFileParser implements FileParser {
 			Document doc = reader.read(configFile);
 			Plugin plugin = new Plugin();
 			Element pluginEle = doc.getRootElement();
+			// 解析插件的唯一ID
+			Element idEle = pluginEle.element(ELE_ID);
+			plugin.setId(idEle.getTextTrim());
 			// 解析插件的名字
 			Element nameEle = pluginEle.element(ELE_NAME);
 			String pluginName = nameEle.getTextTrim();
@@ -71,6 +75,7 @@ public class XmlFileParser implements FileParser {
 				ApiParam param = plugin.new ApiParam();
 				param.setParamName(paramName);
 				param.setDisplayName(paramDisplayName);
+				param.setParamValue(paramEle.getTextTrim());
 				plugin.addParam(param);
 				logger.debug("解析到参数: {}。 显示名: {}", paramName, paramDisplayName);
 			}

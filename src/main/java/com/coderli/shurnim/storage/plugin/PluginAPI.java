@@ -15,6 +15,14 @@ import com.coderli.shurnim.storage.plugin.model.Resource;
 public interface PluginAPI {
 
 	/**
+	 * 初始化接口
+	 * 
+	 * @author OneCoder
+	 * @date 2014年5月19日 下午10:47:40
+	 */
+	void init();
+
+	/**
 	 * 获取子资源列表
 	 * 
 	 * @param parentPath

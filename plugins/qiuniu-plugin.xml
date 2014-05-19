@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<id>qiniu</id>
+	<name>七牛云存储</name>
+	<api>
+		<className>com.coderli.shurnim.storage.qiniu.QiniuPlugin</className>
+		<params>
+			<param name="access_key" displayName="ACCESS_KEY">EjREKHI_GFXbQzyrKdVhhXrIRyj3fRC1s9UmZPZO
+			</param>
+			<param name="secret_key" displayName="SECRET_KEY">88NofFWUvkfJ6T6rGRxlDSZOQxWkIxY2IsFIXJLX
+			</param>
+			<param name="bucketName" displayName="空间名">onecoder
+			</param>
+		</params>
+	</api>
+</plugin>
