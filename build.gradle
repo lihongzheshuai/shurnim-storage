@@ -16,7 +16,9 @@ dependencies {
 			'org.slf4j:slf4j-log4j12:1.7.5',
 			'dom4j:dom4j:1.6.1',
 			'com.google.guava:guava:17.0',
-			'commons-lang:commons-lang:2.6'
+			'commons-lang:commons-lang:2.6',
+			'com.qiniu:sdk:6.1.0',
+			'junit:junit:4.11'
 			)
 }
 

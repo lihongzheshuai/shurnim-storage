@@ -1,5 +1,6 @@
 package com.coderli.shurnim.storage.plugin.model;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,6 +30,16 @@ public class Resource implements Serializable {
 	private long ctime;
 	// 资源大小
 	private long size;
+	// 资源的本地存储路径，如果没有同步到本地则保持null
+	private File localFile;
+
+	public File getLocalFile() {
+		return localFile;
+	}
+
+	public void setLocalFile(File localFile) {
+		this.localFile = localFile;
+	}
 
 	public long getCtime() {
 		return ctime;

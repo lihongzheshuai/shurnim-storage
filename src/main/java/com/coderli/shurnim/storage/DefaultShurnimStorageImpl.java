@@ -1,6 +1,7 @@
 package com.coderli.shurnim.storage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +37,7 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 			.getLogger(DefaultShurnimStorageImpl.class);
 	private PluginScanner pluginScanner = new DefaultPluginScanner();
 	private PluginParser pluginParser = new DefaultPluginParser();
+	private String tempDir;
 
 	public DefaultShurnimStorageImpl() {
 		this(null);
@@ -45,6 +47,16 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 		logger.info("开始初始化后端接口。");
 		if (pluginFolder == null) {
 			pluginFolder = getPluginFolder();
+		}
+		tempDir = getFullPath(pluginFolder, "temp");
+		File tempDirFile = new File(tempDir);
+		if (!tempDirFile.exists()) {
+			logger.info("临时文件夹: {} 不存在，创建。", tempDir);
+			try {
+				tempDirFile.createNewFile();
+			} catch (IOException e) {
+				logger.error("创建临时文件夹失败。初始化失败。", e);
+			}
 		}
 		logger.debug("开始扫描插件文件夹: {} 。", pluginFolder);
 		List<PluginResource> pluginResourceList = pluginScanner
@@ -173,18 +185,17 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 		String resourceName = resource.getName();
 		String path = resource.getPath();
 		String fullPath = getFullPath(path, resourceName);
-		if (resourceType.equals(Type.DIRECTORY)) {
+		if (Type.DIRECTORY.equals(resourceType)) {
 			toPluginApi.mkdir(fullPath, true);
 			logger.debug("给插件:{} 创建文件夹: {}", toPluginId, fullPath);
 			return true;
 		}
-		String tempPath = System.getProperty("java.io.tmpdir") + File.separator
-				+ resourceName;
+		String tempFilePath = getFullPath(tempDir, resourceName);
 		logger.debug("开始将文件: {} 下载到临时文件夹。", resourceName);
 		Resource tempResource = fromPluginApi.downloadResource(
-				resource.getPath(), resourceName, tempPath);
-		logger.debug("文件: {} 下载完成。准备上传。");
-		File file = new File(tempPath);
+				resource.getPath(), resourceName, tempFilePath);
+		logger.debug("文件: {} 下载完成。准备上传。", resourceName);
+		File file = new File(tempFilePath);
 		boolean result = toPluginApi.uploadResource(path, resourceName, file);
 		if (result) {
 			logger.info("文件: {} 从插件: {} 同步到: {} 完成。", resourceName,
@@ -194,7 +205,7 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 					fromPluginId, toPluginId);
 
 		}
-		logger.debug("删除临时文件: {}。", tempPath);
+		logger.debug("删除临时文件: {}。", tempFilePath);
 		file.delete();
 		return result;
 	}

@@ -78,6 +78,7 @@ public class AbstractShurinimStorageImpl {
 							String.class);
 					setMethod.invoke(api, paramValue);
 				}
+				api.init();
 				apiMap.put(pluginId, api);
 			} catch (Exception e) {
 				logger.error("构造插件: {} 接口实例失败。", plugin.getName());
