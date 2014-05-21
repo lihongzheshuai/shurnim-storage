@@ -82,7 +82,7 @@ OSChina上的会持续更新。
 
 1. 实现PluginAPI接口
 
-```
+```java
 package com.coderli.shurnim.storage.plugin;
 
 import java.io.File;
@@ -167,7 +167,7 @@ public interface PluginAPI {
 插件实现类只要与*shurnim-storage*工程在同一个classpath即可使用。您既可以直接在源码工程中开发插件，就如工程里提供的*upyun*和*qiniu*插件一样，也可以作为独立工程开发，打成jar，放置在同一个classpath下。<br/><br/>
 *upyun*插件样例(功能不完整):
 
-```    
+```java    
 package com.coderli.shurnim.storage.upyun.plugin;
 
 import java.io.File;
@@ -345,7 +345,7 @@ public class UpYunPlugin extends AbstractPluginAPI {
 
 **ShurnimStorage**接口是*shurinm-storage*框架全局的也是唯一的接口，目前定义如
 
-```
+```java
 package com.coderli.shurnim.storage;
 
 import java.util.List;
@@ -435,7 +435,7 @@ public interface ShurnimStorage {
 
 <a name="使用样例"></a>
 #### 使用样例
-```        
+```java        
 package com.coderli.shurnim.test.shurnimstorage;
 
 import org.junit.Assert;
