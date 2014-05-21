@@ -488,5 +488,3 @@ public class ShurnimStorageTest {
 * Email: <wushikezuo@gmail.com>
 * QQ:57959968
 * Blog:[OneCoder](http://www.coderli.com)
-
-项目的Bug和改进点，可在OSChina上以issue的方式直接提交给我。
