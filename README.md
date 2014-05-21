@@ -82,7 +82,7 @@ OSChina上的会持续更新。
 
 1. 实现PluginAPI接口
 
-```
+```java
 package com.coderli.shurnim.storage.plugin;
 
 import java.io.File;
