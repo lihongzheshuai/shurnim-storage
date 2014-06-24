@@ -24,6 +24,7 @@ public class QiniuPlugin extends AbstractPluginAPI {
 	private String access_key;
 	private String secret_key;
 	private String bucketName;
+	private String file_name_spliter;
 	private Mac mac;
 
 	public String getAccess_key() {
@@ -48,6 +49,14 @@ public class QiniuPlugin extends AbstractPluginAPI {
 
 	public void setBucketName(String bucketName) {
 		this.bucketName = bucketName;
+	}
+
+	public String getFile_name_spliter() {
+		return file_name_spliter;
+	}
+
+	public void setFile_name_spliter(String file_name_spliter) {
+		this.file_name_spliter = file_name_spliter;
 	}
 
 	/*
@@ -104,7 +113,20 @@ public class QiniuPlugin extends AbstractPluginAPI {
 		try {
 			uptoken = putPolicy.token(mac);
 			PutExtra extra = new PutExtra();
-			String key = name;
+			String key;
+			if (file_name_spliter != null && !file_name_spliter.isEmpty()) {
+				String[] names = name.split(file_name_spliter);
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < names.length; i++) {
+					sb.append(names[i]);
+					if (i < names.length - 1) {
+						sb.append("/");
+					}
+				}
+				key = sb.toString();
+			} else {
+				key = getFullPath(parentPath, name);
+			}
 			String localFile = uploadFile.getAbsolutePath();
 			PutRet ret = IoApi.putFile(uptoken, key, localFile, extra);
 			return true;
@@ -127,4 +149,5 @@ public class QiniuPlugin extends AbstractPluginAPI {
 	public void init() {
 		mac = new Mac(access_key, secret_key);
 	}
+
 }

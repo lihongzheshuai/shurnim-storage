@@ -73,7 +73,22 @@ public interface ShurnimStorage {
 	 * @author OneCoder
 	 * @date 2014年5月11日 上午11:41:24
 	 */
-	boolean sycnResource(String fromPluginId, String toPluginId,
+	boolean syncResource(String fromPluginId, String toPluginId,
 			Resource resource) throws Exception;
-	
+
+	/**
+	 * 同步整个目录
+	 * 
+	 * @param fromPluginId
+	 *            待同步的插件Id
+	 * @param toPluginId
+	 *            目标插件Id
+	 * @param dirPath
+	 *            待同步目录
+	 * @param isSyncSubDir
+	 *            是否同步子目录
+	 * @throws Exception
+	 */
+	void syncDirectory(String fromPluginId, String toPluginId, String dirPath,
+			boolean isSyncSubDir) throws Exception;
 }

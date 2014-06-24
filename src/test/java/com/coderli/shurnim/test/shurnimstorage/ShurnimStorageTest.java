@@ -1,5 +1,7 @@
 package com.coderli.shurnim.test.shurnimstorage;
 
+import java.io.File;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,20 +26,37 @@ public class ShurnimStorageTest {
 	@BeforeClass
 	public static void init() {
 		shurnim = new DefaultShurnimStorageImpl(
-				"/Users/apple/git/shurnim-storage-for-UPYUN/plugins");
+				System.getProperty("user.dir") + File.separator + "plugins");
 	}
 
+	/**
+	 * 测试同步文件
+	 */
 	@Test
-	public void testSycnResource() {
+	public void testSyncResource() {
 		Resource syncResource = new Resource();
 		syncResource.setPath("/api");
 		syncResource.setName("api.html");
 		syncResource.setType(Type.FILE);
 		try {
-			Assert.assertTrue(shurnim.sycnResource("upyun", "qiniu",
+			Assert.assertTrue(shurnim.syncResource("upyun", "qiniu",
 					syncResource));
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 测试同步文件夹
+	 */
+	@Test
+	public void testSyncDir() {
+		String dir = "backup";
+		try {
+			shurnim.syncDirectory("local", "qiniu", dir, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("同步文件夹异常。");
 		}
 	}
 }

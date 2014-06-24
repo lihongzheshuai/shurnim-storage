@@ -52,11 +52,7 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 		File tempDirFile = new File(tempDir);
 		if (!tempDirFile.exists()) {
 			logger.info("临时文件夹: {} 不存在，创建。", tempDir);
-			try {
-				tempDirFile.createNewFile();
-			} catch (IOException e) {
-				logger.error("创建临时文件夹失败。初始化失败。", e);
-			}
+			tempDirFile.mkdir();
 		}
 		logger.debug("开始扫描插件文件夹: {} 。", pluginFolder);
 		List<PluginResource> pluginResourceList = pluginScanner
@@ -161,7 +157,7 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 	 * java.util.List, com.coderli.shurnim.storage.plugin.model.Resource)
 	 */
 	@Override
-	public boolean sycnResource(String fromPluginId, String toPluginId,
+	public boolean syncResource(String fromPluginId, String toPluginId,
 			Resource resource) throws Exception {
 		if (fromPluginId == null) {
 			logger.error("输入的插件Id为null，不合法。");
@@ -208,5 +204,47 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 		logger.debug("删除临时文件: {}。", tempFilePath);
 		file.delete();
 		return result;
+	}
+
+	@Override
+	public void syncDirectory(String fromPluginId, String toPluginId,
+			String dirPath, boolean isSyncSubDir) throws Exception {
+		File rootDir = new File(dirPath);
+		if (!rootDir.exists() || !rootDir.canRead()) {
+			logger.error("待同步的文件夹不存在或不可读。{}", dirPath);
+			return;
+		}
+		if (!rootDir.isDirectory()) {
+			logger.error("不是目录：{}", dirPath);
+			return;
+		}
+		if (isSyncSubDir) {
+			recursionSync(fromPluginId, toPluginId, rootDir);
+		} else {
+			// TODO
+		}
+	}
+
+	/**
+	 * 递归同步资源
+	 * 
+	 * @param fromPluginId
+	 * @param toPluginId
+	 * @param rootDir
+	 * @throws Exception
+	 */
+	private void recursionSync(String fromPluginId, String toPluginId,
+			File rootDir) throws Exception {
+		File[] files = rootDir.listFiles();
+		for (File file : files) {
+			if (file.isDirectory()) {
+				recursionSync(fromPluginId, toPluginId, file);
+			} else {
+				Resource resource = new Resource();
+				resource.setName(file.getName());
+				resource.setPath(file.getParent());
+				syncResource(fromPluginId, toPluginId, resource);
+			}
+		}
 	}
 }

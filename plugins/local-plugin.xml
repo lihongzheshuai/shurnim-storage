@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<id>local</id>
+	<name>本地文件</name>
+	<api>
+		<className>com.coderli.shurnim.storage.local.LocalPlugin
+		</className>
+	</api>
+</plugin>

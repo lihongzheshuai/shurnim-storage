@@ -70,13 +70,13 @@ public class UpYunPlugin extends AbstractPluginAPI {
 	public Resource downloadResource(String parentPath, String name,
 			String storePath) {
 		File storeFile = new File(storePath);
-//		if (!storeFile.exists()) {
-//			try {
-//				storeFile.createNewFile();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		// if (!storeFile.exists()) {
+		// try {
+		// storeFile.createNewFile();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// }
 		String filePath = getFullPath(parentPath, name);
 		upyun.readDir("/api");
 		if (upyun.readFile(filePath, storeFile)) {
@@ -88,13 +88,6 @@ public class UpYunPlugin extends AbstractPluginAPI {
 			return result;
 		}
 		return null;
-	}
-
-	String getFullPath(String parentPath, String name) {
-		if (!parentPath.endsWith(File.separator)) {
-			parentPath = parentPath + File.separator;
-		}
-		return parentPath + name;
 	}
 
 	/*

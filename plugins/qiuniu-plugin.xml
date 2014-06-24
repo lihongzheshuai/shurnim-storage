@@ -11,6 +11,8 @@
 			</param>
 			<param name="bucketName" displayName="空间名">onecoder
 			</param>
+			<!-- 留空则不进行文件名切分转换成对应的key的操作，直接按照文件路径生成key ，否则按照给定的符号拆分文件名然后用“/”组合成七牛上的key，相当于文件路径 -->
+			<param name="file_name_spliter" displayName="文件名切分符号">_</param>
 		</params>
 	</api>
 </plugin>

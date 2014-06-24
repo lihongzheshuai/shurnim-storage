@@ -63,6 +63,10 @@ public class XmlFileParser implements FileParser {
 			plugin.setApiClass(className);
 			logger.debug("插件的接口实现类为: {}。", className);
 			Element paramsEle = apiEle.element(ELE_PARAMS);
+			if (paramsEle == null) {
+				logger.debug("没有可用的参数列表。");
+				return plugin;
+			}
 			List<Element> paramEles = paramsEle.elements(ELE_PARAM);
 			if (paramEles == null || paramEles.size() == 0) {
 				logger.debug("没有可用的参数列表。");
