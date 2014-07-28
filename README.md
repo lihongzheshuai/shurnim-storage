@@ -38,7 +38,7 @@
 <a name="获取代码"></a>
 ### 获取代码
 
-* gitcafe项目主页: <https://gitcafe.com/onecoder/shurnim-storage-for-UPYUN>
+* GitHub项目主页: <https://github.com/lihongzheshuai/shurnim-storage>
 * OSChina项目主页: <http://git.oschina.net/onecoder/shurnim-storage><br>
 OSChina上的会持续更新。
 
