@@ -863,6 +863,7 @@ public class UpYun {
 	 * 
 	 * @return 请求结果（字符串）或 null
 	 */
+	@SuppressWarnings("resource")
 	private String HttpAction(String method, String uri, byte[] datas,
 			File outFile, boolean auto, Map<String, String> params) {
 

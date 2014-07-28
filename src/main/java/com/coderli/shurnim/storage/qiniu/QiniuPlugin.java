@@ -11,7 +11,6 @@ import com.qiniu.api.auth.AuthException;
 import com.qiniu.api.auth.digest.Mac;
 import com.qiniu.api.io.IoApi;
 import com.qiniu.api.io.PutExtra;
-import com.qiniu.api.io.PutRet;
 import com.qiniu.api.rs.PutPolicy;
 
 /**
@@ -128,7 +127,7 @@ public class QiniuPlugin extends AbstractPluginAPI {
 				key = getFullPath(parentPath, name);
 			}
 			String localFile = uploadFile.getAbsolutePath();
-			PutRet ret = IoApi.putFile(uptoken, key, localFile, extra);
+			IoApi.putFile(uptoken, key, localFile, extra);
 			return true;
 		} catch (AuthException e) {
 			// TODO Auto-generated catch block

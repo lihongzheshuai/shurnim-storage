@@ -1,7 +1,6 @@
 package com.coderli.shurnim.storage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -188,7 +187,7 @@ public class DefaultShurnimStorageImpl extends AbstractShurinimStorageImpl
 		}
 		String tempFilePath = getFullPath(tempDir, resourceName);
 		logger.debug("开始将文件: {} 下载到临时文件夹。", resourceName);
-		Resource tempResource = fromPluginApi.downloadResource(
+		fromPluginApi.downloadResource(
 				resource.getPath(), resourceName, tempFilePath);
 		logger.debug("文件: {} 下载完成。准备上传。", resourceName);
 		File file = new File(tempFilePath);

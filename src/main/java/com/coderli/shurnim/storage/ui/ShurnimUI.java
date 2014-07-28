@@ -5,9 +5,7 @@ package com.coderli.shurnim.storage.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -15,19 +13,14 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.ScrollPaneLayout;
 import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.coderli.shurnim.storage.DefaultShurnimStorageImpl;
 import com.coderli.shurnim.storage.ShurnimStorage;
 import com.coderli.shurnim.storage.plugin.model.Plugin;
-
-import javax.swing.JScrollPane;
-import javax.swing.tree.TreeNode;
-
-import java.awt.SystemColor;
 
 /**
  * @author OneCoder
@@ -83,7 +76,7 @@ public class ShurnimUI {
 		pluginTree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JTree node = (JTree) e.getComponent();
+//				JTree node = (JTree) e.getComponent();
 			}
 		});
 		pluginTree.setBackground(new Color(238, 238, 238));
