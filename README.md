@@ -1,7 +1,5 @@
 # shurnim-storage
 
-![Shurnim icon](http://pic.yupoo.com/8wuliao/DLPii2Jx/rEBO.jpg)
-
 ## 目录
 * [背景介绍](#背景介绍)
 * [项目介绍](#项目介绍)
